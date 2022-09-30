@@ -5,6 +5,9 @@
   },
   "resources" : [
     {
+      "filename" : "card1.arreferenceimage"
+    },
+    {
       "filename" : "horse1.arreferenceimage"
     }
   ]

@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		18A6AE2A28E593AA00640A58 /* Experience.rcproject in Sources */ = {isa = PBXBuildFile; fileRef = 18A6AE2928E593AA00640A58 /* Experience.rcproject */; };
 		18A6AE2C28E5946300640A58 /* ViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A6AE2B28E5946300640A58 /* ViewController2.swift */; };
+		E160ED5628E6853300C98259 /* Experience.rcproject in Sources */ = {isa = PBXBuildFile; fileRef = E160ED5528E6853300C98259 /* Experience.rcproject */; };
 		E1DA7B0D28E2E81000B91164 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DA7B0C28E2E81000B91164 /* AppDelegate.swift */; };
 		E1DA7B0F28E2E81000B91164 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = E1DA7B0E28E2E81000B91164 /* art.scnassets */; };
 		E1DA7B1128E2E81000B91164 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DA7B1028E2E81000B91164 /* ViewController.swift */; };
@@ -38,8 +38,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		18A6AE2928E593AA00640A58 /* Experience.rcproject */ = {isa = PBXFileReference; lastKnownFileType = file.rcproject; path = Experience.rcproject; sourceTree = SOURCE_ROOT; };
 		18A6AE2B28E5946300640A58 /* ViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController2.swift; sourceTree = "<group>"; };
+		E160ED5528E6853300C98259 /* Experience.rcproject */ = {isa = PBXFileReference; lastKnownFileType = file.rcproject; path = Experience.rcproject; sourceTree = "<group>"; };
 		E1DA7B0928E2E81000B91164 /* PlayCardAR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlayCardAR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1DA7B0C28E2E81000B91164 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E1DA7B0E28E2E81000B91164 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -107,7 +107,7 @@
 				E1DA7B1028E2E81000B91164 /* ViewController.swift */,
 				18A6AE2B28E5946300640A58 /* ViewController2.swift */,
 				E1DA7B1228E2E81000B91164 /* Main.storyboard */,
-				18A6AE2928E593AA00640A58 /* Experience.rcproject */,
+				E160ED5528E6853300C98259 /* Experience.rcproject */,
 				E1DA7B1528E2E81000B91164 /* Assets.xcassets */,
 				E1DA7B1728E2E81000B91164 /* LaunchScreen.storyboard */,
 			);
@@ -265,8 +265,8 @@
 			files = (
 				E1DA7B1128E2E81000B91164 /* ViewController.swift in Sources */,
 				18A6AE2C28E5946300640A58 /* ViewController2.swift in Sources */,
+				E160ED5628E6853300C98259 /* Experience.rcproject in Sources */,
 				E1DA7B0D28E2E81000B91164 /* AppDelegate.swift in Sources */,
-				18A6AE2A28E593AA00640A58 /* Experience.rcproject in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
