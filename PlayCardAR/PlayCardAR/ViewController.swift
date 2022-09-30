@@ -24,12 +24,12 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         showScene()
         
         // Create a new scene
-        let scene = SCNScene(named: "art.scnassets/foxTest.scn")!
-        
-        // Set the scene to the view
-        sceneView.scene = scene
-        print("Hello Nhung")
-        sceneView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:))))
+//        let scene = SCNScene(named: "art.scnassets/foxTest.scn")!
+//
+//        // Set the scene to the view
+//        sceneView.scene = scene
+//        print("Hello Nhung")
+        sceneView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap(_:))))
 
     }
     
@@ -61,7 +61,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             planeNode.eulerAngles.x = -.pi / 2
             node.addChildNode(planeNode)
             if imageAnchor.referenceImage.name == "card1" {
-                if let _scene = SCNScene(named: "art.scnassets/ball.scn"){
+                if let _scene = SCNScene(named: "art.scnassets/foxTest.scn"){
                     if let _node = _scene.rootNode.childNodes.first {
                         self.pokemonNode = _node
                         _node.eulerAngles.x = .pi/3
@@ -215,7 +215,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         guard let terrain = self.pokemonNode else {
                    return
                }
-
        let point = sender.location(in: sceneView)
         if let _music = SCNAudioSource(named: "music1") {
             let action = SCNAction.playAudio( _music, waitForCompletion: true)
