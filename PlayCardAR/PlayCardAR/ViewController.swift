@@ -21,6 +21,13 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // Show statistics such as fps and timing information
         sceneView.showsStatistics = true
         sceneView.autoenablesDefaultLighting = true
+        showScene()
+        
+        // Create a new scene
+        let scene = SCNScene(named: "art.scnassets/foxTest.scn")!
+        
+        // Set the scene to the view
+        sceneView.scene = scene
         print("Hello Nhung")
         sceneView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:))))
 
