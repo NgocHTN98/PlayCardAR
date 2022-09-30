@@ -15,12 +15,12 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     var pokemonNode: SCNNode?
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         // Set the view's delegate
         sceneView.delegate = self
         
         // Show statistics such as fps and timing information
         sceneView.showsStatistics = true
+        sceneView.autoenablesDefaultLighting = true
         showScene()
         
         // Create a new scene
@@ -29,6 +29,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // Set the scene to the view
         sceneView.scene = scene
         print("Hello Nhung")
+        sceneView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:))))
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -53,15 +55,23 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         if let imageAnchor = anchor as? ARImageAnchor {
             let size = imageAnchor.referenceImage.physicalSize
             let plane = SCNPlane(width: size.width, height: size.height)
-            
-            plane.firstMaterial?.diffuse.contents = UIColor.white.withAlphaComponent(0.5)
+            plane.firstMaterial?.diffuse.contents = UIColor.white.withAlphaComponent(0.0)
             plane.cornerRadius = 0.005
             let planeNode = SCNNode(geometry: plane)
             planeNode.eulerAngles.x = -.pi / 2
             node.addChildNode(planeNode)
-            if let nodeShape = self.pokemonNode {
-                node.addChildNode(nodeShape)
+            if imageAnchor.referenceImage.name == "card1" {
+                if let _scene = SCNScene(named: "art.scnassets/ball.scn"){
+                    if let _node = _scene.rootNode.childNodes.first {
+                        self.pokemonNode = _node
+                        _node.eulerAngles.x = .pi/3
+                       planeNode.addChildNode(_node)
+                    }
+                   
+               }
+               
             }
+           
         }
         return node
     }
@@ -91,31 +101,31 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 //        sceneView.scene = scene
         
         ///option 2
-        let scene = SCNScene(named: "art.scnassets/fox.scn")!
-        let plane = SCNPlane(width: 0.1, height: 0.1)
-        plane.firstMaterial?.diffuse.contents = UIColor.red.withAlphaComponent(0.5)
-        plane.cornerRadius = 0.005
-        let planeNode = SCNNode(geometry: plane)
-        scene.rootNode.addChildNode(planeNode)
-        sceneView.scene = scene
-        self.pokemonNode = sceneView.scene.rootNode.childNode(withName: "foxPink", recursively: false)
-        sceneView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:))))
+//        let scene = SCNScene(named: "art.scnassets/box.scn")!
+//        let plane = SCNPlane(width: 0.1, height: 0.1)
+//        plane.firstMaterial?.diffuse.contents = UIColor.red.withAlphaComponent(0.5)
+//        plane.cornerRadius = 0.005
+//        let planeNode = SCNNode(geometry: plane)
+//        scene.rootNode.addChildNode(planeNode)
+//        sceneView.scene = scene
+//        self.pokemonNode = sceneView.scene.rootNode.childNode(withName: "box", recursively: false)
+//        sceneView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:))))
 //        sceneView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap(_:))))
     }
     
     func setConfig() {
         //config 1
         // Create a session configuration
-        let configuration = ARWorldTrackingConfiguration()
-
-        // Run the view's session
-        sceneView.session.run(configuration)
+//        let configuration = ARWorldTrackingConfiguration()
+//
+//        // Run the view's session
+//        sceneView.session.run(configuration)
         //config 2
-//        let config = ARImageTrackingConfiguration()
-//        guard let trackingImages = ARReferenceImage.referenceImages(inGroupNamed: "Play game", bundle: .main) else {   fatalError("Couldn't load tracking images.") }
-//        config.trackingImages = trackingImages
-//        config.maximumNumberOfTrackedImages = 1
-//        sceneView.session.run(config)
+        let config = ARImageTrackingConfiguration()
+        guard let trackingImages = ARReferenceImage.referenceImages(inGroupNamed: "Play game", bundle: .main) else {   fatalError("Couldn't load tracking images.") }
+        config.trackingImages = trackingImages
+        config.maximumNumberOfTrackedImages = 2
+        sceneView.session.run(config)
         
         //config 3
         //        // Create a session configuration
@@ -221,24 +231,24 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     @objc func handlePan(_ sender: UIPanGestureRecognizer) {
         guard let terrain = self.pokemonNode else {
                    return
-               }
+       }
 
-               let point = sender.location(in: sceneView)
-               if let result = sceneView?.smartHitTest(point, infinitePlane: true) {
-                   if let lastDragResult = lastDragResult {
-                       let vector: SCNVector3 = SCNVector3(result.worldTransform.columns.3.x - lastDragResult.worldTransform.columns.3.x,
-                                                           result.worldTransform.columns.3.y - lastDragResult.worldTransform.columns.3.y,
-                                                           result.worldTransform.columns.3.z - lastDragResult.worldTransform.columns.3.z)
-                       terrain.position.x += vector.x
-                       terrain.position.y += vector.y
-                       terrain.position.z = vector.z
-                   }
-                   lastDragResult = result
-               }
+       let point = sender.location(in: sceneView)
+       if let result = sceneView?.smartHitTest(point, infinitePlane: true) {
+           if let lastDragResult = lastDragResult {
+               let vector: SCNVector3 = SCNVector3(result.worldTransform.columns.3.x - lastDragResult.worldTransform.columns.3.x,
+                                                   result.worldTransform.columns.3.y - lastDragResult.worldTransform.columns.3.y,
+                                                   result.worldTransform.columns.3.z - lastDragResult.worldTransform.columns.3.z)
+               terrain.position.x += vector.x
+               terrain.position.y += vector.y
+               terrain.position.z = vector.z
+           }
+           lastDragResult = result
+       }
 
-               if sender.state == .ended {
-                   self.lastDragResult = nil
-               }
+       if sender.state == .ended {
+           self.lastDragResult = nil
+       }
                 
     }
     @objc func upLongPressed(_ sender: UILongPressGestureRecognizer) {
@@ -252,9 +262,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     func execute(action: SCNAction, sender: UILongPressGestureRecognizer) {
 
            let loopAction = SCNAction.repeatForever(action)
-
            if sender.state == .began {
-
+               
                sceneView.scene.rootNode.runAction(loopAction)
 
            } else if sender.state == .ended {
