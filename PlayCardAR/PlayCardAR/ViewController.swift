@@ -124,15 +124,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
      
     }
     
-   
-  
-    
-    func addBallPokemon() {
-        sceneView.autoenablesDefaultLighting = true
-        sceneView.automaticallyUpdatesLighting = true
-        let _pokemon = SCNScene(named: "art.scnassets/foxTest.scn")!
-        sceneView.scene = _pokemon
-    }
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         guard let _nodePokemon = self.node else {
             return
@@ -153,9 +144,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         }
       
     }
-    var PCoordx: Float = 0.0
-    var PCoordz: Float = 0.0
-    var PCoordy: Float = 0.0
     private var lastDragResult: ARHitTestResult?
     @objc func handlePan(_ sender: UIPanGestureRecognizer) {
         guard let terrain = self.node else {
@@ -177,28 +165,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         
         if sender.state == .ended {
             self.lastDragResult = nil
-        }
-        
-    }
-    @objc func upLongPressed(_ sender: UILongPressGestureRecognizer) {
-        
-        let action = SCNAction.moveBy(x: 0, y: 0.5, z: 0, duration: 0.2)
-        
-        execute(action: action, sender: sender)
-        
-    }
-    
-    func execute(action: SCNAction, sender: UILongPressGestureRecognizer) {
-        
-        let loopAction = SCNAction.repeatForever(action)
-        if sender.state == .began {
-            
-            sceneView.scene.rootNode.runAction(loopAction)
-            
-        } else if sender.state == .ended {
-            
-            sceneView.scene.rootNode.removeAllActions()
-            
         }
         
     }
@@ -231,7 +197,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     }
     
     func pauseSpin(_ node: SCNNode) {
-        node.animationPlayer(forKey: "idle")?.play()
+        node.animationPlayer(forKey: "max")?.play()
         node.position = SCNVector3(0, 0, -1.5)
 
 //        let pause = SCNAction.wait(duration: 1.5)
