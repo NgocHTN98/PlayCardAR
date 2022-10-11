@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		18A6AE2C28E5946300640A58 /* ViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A6AE2B28E5946300640A58 /* ViewController2.swift */; };
 		E15223E428F548B2007379FA /* Extensions+ARSCNView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15223E328F548B2007379FA /* Extensions+ARSCNView.swift */; };
+		E15223E828F54A5A007379FA /* sample.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E15223E528F54A5A007379FA /* sample.mp3 */; };
+		E15223E928F54A5A007379FA /* music_test.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E15223E628F54A5A007379FA /* music_test.mp3 */; };
+		E15223EA28F54A5A007379FA /* fireplace.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E15223E728F54A5A007379FA /* fireplace.mp3 */; };
 		E160ED5628E6853300C98259 /* Experience.rcproject in Sources */ = {isa = PBXBuildFile; fileRef = E160ED5528E6853300C98259 /* Experience.rcproject */; };
 		E1DA7B0D28E2E81000B91164 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DA7B0C28E2E81000B91164 /* AppDelegate.swift */; };
 		E1DA7B0F28E2E81000B91164 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = E1DA7B0E28E2E81000B91164 /* art.scnassets */; };
@@ -41,6 +44,9 @@
 /* Begin PBXFileReference section */
 		18A6AE2B28E5946300640A58 /* ViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController2.swift; sourceTree = "<group>"; };
 		E15223E328F548B2007379FA /* Extensions+ARSCNView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extensions+ARSCNView.swift"; sourceTree = "<group>"; };
+		E15223E528F54A5A007379FA /* sample.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = sample.mp3; sourceTree = "<group>"; };
+		E15223E628F54A5A007379FA /* music_test.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = music_test.mp3; sourceTree = "<group>"; };
+		E15223E728F54A5A007379FA /* fireplace.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = fireplace.mp3; sourceTree = "<group>"; };
 		E160ED5528E6853300C98259 /* Experience.rcproject */ = {isa = PBXFileReference; lastKnownFileType = file.rcproject; path = Experience.rcproject; sourceTree = "<group>"; };
 		E1DA7B0928E2E81000B91164 /* PlayCardAR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlayCardAR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1DA7B0C28E2E81000B91164 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -105,6 +111,9 @@
 			isa = PBXGroup;
 			children = (
 				E1DA7B0C28E2E81000B91164 /* AppDelegate.swift */,
+				E15223E728F54A5A007379FA /* fireplace.mp3 */,
+				E15223E628F54A5A007379FA /* music_test.mp3 */,
+				E15223E528F54A5A007379FA /* sample.mp3 */,
 				E1DA7B0E28E2E81000B91164 /* art.scnassets */,
 				E1DA7B1028E2E81000B91164 /* ViewController.swift */,
 				18A6AE2B28E5946300640A58 /* ViewController2.swift */,
@@ -240,8 +249,11 @@
 			files = (
 				E1DA7B0F28E2E81000B91164 /* art.scnassets in Resources */,
 				E1DA7B1928E2E81000B91164 /* LaunchScreen.storyboard in Resources */,
+				E15223E928F54A5A007379FA /* music_test.mp3 in Resources */,
 				E1DA7B1628E2E81000B91164 /* Assets.xcassets in Resources */,
+				E15223EA28F54A5A007379FA /* fireplace.mp3 in Resources */,
 				E1DA7B1428E2E81000B91164 /* Main.storyboard in Resources */,
+				E15223E828F54A5A007379FA /* sample.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
