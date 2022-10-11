@@ -8,35 +8,40 @@
 import UIKit
 import SceneKit
 import ARKit
-class ViewController: UIViewController, ARSCNViewDelegate {
-
+class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
+    
     @IBOutlet var sceneView: ARSCNView!
     var hoopAddred = false
-    var pokemonNode: SCNNode?
+    var node: SCNNode?
+    var audioSource: SCNAudioSource!
+    
+    var soundAction = SCNAction()
+    var soundNode = SCNNode()
+    var scene = SCNScene()
     override func viewDidLoad() {
         super.viewDidLoad()
         // Set the view's delegate
         sceneView.delegate = self
-        
+    
         // Show statistics such as fps and timing information
         sceneView.showsStatistics = true
         sceneView.autoenablesDefaultLighting = true
-        showScene()
-        
-        // Create a new scene
-//        let scene = SCNScene(named: "art.scnassets/foxTest.scn")!
-//
-//        // Set the scene to the view
-//        sceneView.scene = scene
-//        print("Hello Nhung")
+        sceneView.automaticallyUpdatesLighting = false
         sceneView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap(_:))))
-
+        self.setUpAudio()
+        if let scene = SCNScene(named: "art.scnassets/Fox/max.scn") {
+            let model = scene.rootNode.childNode(withName: "Max_rootNode", recursively: true)!
+            model.scale = SCNVector3(1.5, 1.5, 1.5)
+            node = model
+            self.pauseSpin(model)
+            sceneView.scene = scene
+        }
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setConfig()
-       
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -45,87 +50,105 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // Pause the view's session
         sceneView.session.pause()
     }
-
+    
     // MARK: - ARSCNViewDelegate
     
-
-     //Override to create and configure nodes for anchors added to the view's session.
+    
+    //Override to create and configure nodes for anchors added to the view's session.
     func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
+//        guard let imageAnchor = anchor as? ARImageAnchor else { return nil }
+//        let node = SCNNode()
+//        let size = imageAnchor.referenceImage.physicalSize
+//        let plane = SCNPlane(width: size.width, height: size.height)
+//        plane.firstMaterial?.diffuse.contents = UIColor.white.withAlphaComponent(0.4)
+//        plane.cornerRadius = 0.005
+//        let planeNode = SCNNode(geometry: plane)
+//        planeNode.eulerAngles.x = -.pi / 2
+//        node.addChildNode(planeNode)
+//        if imageAnchor.referenceImage.name == "card1" {
+//            if let _scene = SCNScene(named: "art.scnassets/foxTest.scn"){
+//                if let _node = _scene.rootNode.childNodes.first {
+//
+//                    _node.eulerAngles.x = .pi/3
+//                    planeNode.addChildNode(_node)
+//                    let soundNode = SCNNode(geometry: plane)
+//                    planeNode.addChildNode(soundNode)
+//                    self.node = planeNode
+//                }
+//
+//            }
+//
+//        }
+//        return node
+        
+        guard let planeAnchor = anchor as? ARPlaneAnchor else { return nil }
         let node = SCNNode()
-        if let imageAnchor = anchor as? ARImageAnchor {
-            let size = imageAnchor.referenceImage.physicalSize
-            let plane = SCNPlane(width: size.width, height: size.height)
-            plane.firstMaterial?.diffuse.contents = UIColor.white.withAlphaComponent(0.0)
-            plane.cornerRadius = 0.005
-            let planeNode = SCNNode(geometry: plane)
-            planeNode.eulerAngles.x = -.pi / 2
-            node.addChildNode(planeNode)
-            if imageAnchor.referenceImage.name == "card1" {
-                if let _scene = SCNScene(named: "art.scnassets/foxTest.scn"){
-                    if let _node = _scene.rootNode.childNodes.first {
-                        self.pokemonNode = _node
-                        _node.eulerAngles.x = .pi/3
-                       planeNode.addChildNode(_node)
-                    }
-                   
-               }
-               
-            }
-           
-        }
+        let plane = SCNPlane(width: 100, height: 100)
+        plane.firstMaterial?.diffuse.contents = UIColor.red
+        plane.cornerRadius = 0.005
+        let planeNode = SCNNode(geometry: plane)
+        planeNode.eulerAngles.x = -.pi / 2
+        node.addChildNode(planeNode)
         return node
+        
     }
-
+    
+    func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
+        
+    }
+    
     
     func session(_ session: ARSession, didFailWithError error: Error) {
         // Present an error message to the user
-        
+        self.resetTracking()
     }
     
     func sessionWasInterrupted(_ session: ARSession) {
         // Inform the user that the session has been interrupted, for example, by presenting an overlay
-        
+        self.resetTracking()
     }
     
     func sessionInterruptionEnded(_ session: ARSession) {
         // Reset tracking and/or remove existing anchors if consistent tracking is required
-        
+        self.resetTracking()
     }
     
     
     func showScene() {
         ///option 1
-//        // Create a new scene
-//        let scene = SCNScene(named: "art.scnassets/ship.scn")!
-//        // Set the scene to the view
-//        sceneView.scene = scene
+        //        // Create a new scene
+        //        let scene = SCNScene(named: "art.scnassets/ship.scn")!
+        //        // Set the scene to the view
+        //        sceneView.scene = scene
         
         ///option 2
-//        let scene = SCNScene(named: "art.scnassets/box.scn")!
-//        let plane = SCNPlane(width: 0.1, height: 0.1)
-//        plane.firstMaterial?.diffuse.contents = UIColor.red.withAlphaComponent(0.5)
-//        plane.cornerRadius = 0.005
-//        let planeNode = SCNNode(geometry: plane)
-//        scene.rootNode.addChildNode(planeNode)
-//        sceneView.scene = scene
-//        self.pokemonNode = sceneView.scene.rootNode.childNode(withName: "box", recursively: false)
-//        sceneView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:))))
-//        sceneView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap(_:))))
+        //        let scene = SCNScene(named: "art.scnassets/box.scn")!
+        //        let plane = SCNPlane(width: 0.1, height: 0.1)
+        //        plane.firstMaterial?.diffuse.contents = UIColor.red.withAlphaComponent(0.5)
+        //        plane.cornerRadius = 0.005
+        //        let planeNode = SCNNode(geometry: plane)
+        //        scene.rootNode.addChildNode(planeNode)
+        //        sceneView.scene = scene
+        //        self.pokemonNode = sceneView.scene.rootNode.childNode(withName: "box", recursively: false)
+        //        sceneView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:))))
+        //        sceneView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap(_:))))
     }
     
     func setConfig() {
         //config 1
         // Create a session configuration
-//        let configuration = ARWorldTrackingConfiguration()
-//
-//        // Run the view's session
-//        sceneView.session.run(configuration)
+        //        let configuration = ARWorldTrackingConfiguration()
+        //
+        //        // Run the view's session
+        //        sceneView.session.run(configuration)
         //config 2
         let config = ARImageTrackingConfiguration()
-        guard let trackingImages = ARReferenceImage.referenceImages(inGroupNamed: "Play game", bundle: .main) else {   fatalError("Couldn't load tracking images.") }
+        guard let trackingImages = ARReferenceImage.referenceImages(inGroupNamed: "PlayGame", bundle: nil) else {   fatalError("Couldn't load tracking images.") }
         config.trackingImages = trackingImages
-        config.maximumNumberOfTrackedImages = 2
-        sceneView.session.run(config)
+        //        config.planeDetection = .horizontal
+        //        config.environmentTexturing = .automatic
+        sceneView.session.run(config, options: [.resetTracking, .removeExistingAnchors])
+        
         
         //config 3
         //        // Create a session configuration
@@ -188,171 +211,117 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     func addBallPokemon() {
         sceneView.autoenablesDefaultLighting = true
         sceneView.automaticallyUpdatesLighting = true
-        let _pokemon = SCNScene(named: "art.scnassets/pokemon.scn")!
+        let _pokemon = SCNScene(named: "art.scnassets/foxTest.scn")!
         sceneView.scene = _pokemon
-        //        guard let node = _pokemon.rootNode.childNode(withName: "ball", recursively: false) else { return }
-        //
-        //        let scaleFactor = 0.5
-        //                node.scale = SCNVector3(scaleFactor, scaleFactor, scaleFactor)
-        //                node.eulerAngles.x = -.pi / 2
-        //        sceneView.scene.rootNode.addChildNode(node)
     }
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
-        //        DispatchQueue.main.async {
-        //            let _pokemon = SCNScene(named: "art.scnassets/pokemon.scn")!
-        //            let node = _pokemon.rootNode.childNode(withName: "ball", recursively: false)
-        //            let overlayNode = node
-        //            overlayNode?.opacity = 1
-        //            overlayNode?.position.y = 0.2
-        //            if let _overLay = overlayNode {
-        //                node?.addChildNode(_overLay)
-        //            }
-        //
-        //
-        //        }
+        guard let _nodePokemon = self.node else {
+            return
+        }
+        _nodePokemon.removeFromParentNode()
+        _nodePokemon.addAudioPlayer(SCNAudioPlayer(source: audioSource))
+        // Place object node on top of the plane's node
+        node.addChildNode(_nodePokemon)
+        
+//        self.setConfig()
     }
+   
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
-        guard let terrain = self.pokemonNode else {
-                   return
-               }
-       let point = sender.location(in: sceneView)
-        if let _music = SCNAudioSource(named: "music1") {
-            let action = SCNAction.playAudio( _music, waitForCompletion: true)
-            terrain.runAction(action)
+        let location = sender.location(in: sceneView)
+        let results = sceneView.hitTest(location, options: [SCNHitTestOption.searchMode : 1])
+        for _ in results.filter( { $0.node.name == "Max" }) {  /// See if the beam hit the cube
+            self.playSound()
         }
       
-            
     }
     var PCoordx: Float = 0.0
     var PCoordz: Float = 0.0
     var PCoordy: Float = 0.0
     private var lastDragResult: ARHitTestResult?
     @objc func handlePan(_ sender: UIPanGestureRecognizer) {
-        guard let terrain = self.pokemonNode else {
-                   return
-       }
-
-       let point = sender.location(in: sceneView)
-       if let result = sceneView?.smartHitTest(point, infinitePlane: true) {
-           if let lastDragResult = lastDragResult {
-               let vector: SCNVector3 = SCNVector3(result.worldTransform.columns.3.x - lastDragResult.worldTransform.columns.3.x,
-                                                   result.worldTransform.columns.3.y - lastDragResult.worldTransform.columns.3.y,
-                                                   result.worldTransform.columns.3.z - lastDragResult.worldTransform.columns.3.z)
-               terrain.position.x += vector.x
-               terrain.position.y += vector.y
-               terrain.position.z = vector.z
-           }
-           lastDragResult = result
-       }
-
-       if sender.state == .ended {
-           self.lastDragResult = nil
-       }
-                
+        guard let terrain = self.node else {
+            return
+        }
+        
+        let point = sender.location(in: sceneView)
+        if let result = sceneView?.smartHitTest(point, infinitePlane: true) {
+            if let lastDragResult = lastDragResult {
+                let vector: SCNVector3 = SCNVector3(result.worldTransform.columns.3.x - lastDragResult.worldTransform.columns.3.x,
+                                                    result.worldTransform.columns.3.y - lastDragResult.worldTransform.columns.3.y,
+                                                    result.worldTransform.columns.3.z - lastDragResult.worldTransform.columns.3.z)
+                terrain.position.x += vector.x
+                terrain.position.y += vector.y
+                terrain.position.z = vector.z
+            }
+            lastDragResult = result
+        }
+        
+        if sender.state == .ended {
+            self.lastDragResult = nil
+        }
+        
     }
     @objc func upLongPressed(_ sender: UILongPressGestureRecognizer) {
-
+        
         let action = SCNAction.moveBy(x: 0, y: 0.5, z: 0, duration: 0.2)
-
-           execute(action: action, sender: sender)
-
-       }
-
+        
+        execute(action: action, sender: sender)
+        
+    }
+    
     func execute(action: SCNAction, sender: UILongPressGestureRecognizer) {
-
-           let loopAction = SCNAction.repeatForever(action)
-           if sender.state == .began {
-               
-               sceneView.scene.rootNode.runAction(loopAction)
-
-           } else if sender.state == .ended {
-
-               sceneView.scene.rootNode.removeAllActions()
-
-           }
-
-       }
-
-}
-fileprivate extension ARSCNView {
-    func smartHitTest(_ point: CGPoint,
-                      infinitePlane: Bool = false,
-                      objectPosition: float3? = nil,
-                      allowedAlignments: [ARPlaneAnchor.Alignment] = [.horizontal]) -> ARHitTestResult? {
-
-        // Perform the hit test.
-        let results: [ARHitTestResult]!
-        if #available(iOS 11.3, *) {
-            results = hitTest(point, types: [.existingPlaneUsingGeometry, .estimatedHorizontalPlane])
-        } else {
-            results = hitTest(point, types: [.estimatedHorizontalPlane])
+        
+        let loopAction = SCNAction.repeatForever(action)
+        if sender.state == .began {
+            
+            sceneView.scene.rootNode.runAction(loopAction)
+            
+        } else if sender.state == .ended {
+            
+            sceneView.scene.rootNode.removeAllActions()
+            
         }
+        
+    }
+  
+    private func playSound() {
+        // Ensure there is only one audio player
+        self.node?.removeAllAudioPlayers()
+        // Create a player from the source and add it to `objectNode`
+        self.node?.addAudioPlayer(SCNAudioPlayer(source: audioSource))
+    }
+    
+    private func resetTracking() {
+        let config = ARImageTrackingConfiguration()
+        guard let trackingImages = ARReferenceImage.referenceImages(inGroupNamed: "PlayGame", bundle: nil) else {   fatalError("Couldn't load tracking images.") }
+        config.trackingImages = trackingImages
+        //        config.planeDetection = .horizontal
+        //        config.environmentTexturing = .automatic
+        sceneView.session.run(config, options: [.resetTracking, .removeExistingAnchors])
+        // Reset preview state.
+        self.node = nil
+    }
+    
+    private func setUpAudio() {
+        // Instantiate the audio source
+        audioSource = SCNAudioSource(fileNamed: "sample.mp3")!
+        // As an environmental sound layer, audio should play indefinitely
+        audioSource.loops = true
+        // Decode the audio from disk ahead of time to prevent a delay in playback
+        audioSource.load()
+    }
+    
+    func pauseSpin(_ node: SCNNode) {
+        node.animationPlayer(forKey: "idle")?.play()
+        node.position = SCNVector3(0, 0, -1.5)
 
-        // 1. Check for a result on an existing plane using geometry.
-        if #available(iOS 11.3, *) {
-            if let existingPlaneUsingGeometryResult = results.first(where: { $0.type == .existingPlaneUsingGeometry }),
-                let planeAnchor = existingPlaneUsingGeometryResult.anchor as? ARPlaneAnchor, allowedAlignments.contains(planeAnchor.alignment) {
-                return existingPlaneUsingGeometryResult
-            }
-        }
-
-        if infinitePlane {
-            // 2. Check for a result on an existing plane, assuming its dimensions are infinite.
-            //    Loop through all hits against infinite existing planes and either return the
-            //    nearest one (vertical planes) or return the nearest one which is within 5 cm
-            //    of the object's position.
-            let infinitePlaneResults = hitTest(point, types: .existingPlane)
-
-            for infinitePlaneResult in infinitePlaneResults {
-                if let planeAnchor = infinitePlaneResult.anchor as? ARPlaneAnchor, allowedAlignments.contains(planeAnchor.alignment) {
-                    // For horizontal planes we only want to return a hit test result
-                    // if it is close to the current object's position.
-                    if let objectY = objectPosition?.y {
-                        let planeY = infinitePlaneResult.worldTransform.translation.y
-                        if objectY > planeY - 0.05 && objectY < planeY + 0.05 {
-                            return infinitePlaneResult
-                        }
-                    } else {
-                        return infinitePlaneResult
-                    }
-                }
-            }
-        }
-
-        // 3. As a final fallback, check for a result on estimated planes.
-        return results.first(where: { $0.type == .estimatedHorizontalPlane })
+//        let pause = SCNAction.wait(duration: 1.5)
+//        node.runAction(pause) {
+//            node.animationPlayer(forKey: "spin")?.play()
+//            node.runAction(pause) {
+//                self.circleRight(node)
+//            }
+//        }
     }
 }
 
-fileprivate extension float4x4 {
-    /**
-     Treats matrix as a (right-hand column-major convention) transform matrix
-     and factors out the translation component of the transform.
-     */
-    var translation: float3 {
-        get {
-            let translation = columns.3
-            return float3(translation.x, translation.y, translation.z)
-        }
-        set(newValue) {
-            columns.3 = float4(newValue.x, newValue.y, newValue.z, columns.3.w)
-        }
-    }
-
-    /**
-     Factors out the orientation component of the transform.
-     */
-    var orientation: simd_quatf {
-        return simd_quaternion(self)
-    }
-
-    /**
-     Creates a transform matrix with a uniform scale factor in all directions.
-     */
-    init(uniformScale scale: Float) {
-        self = matrix_identity_float4x4
-        columns.0.x = scale
-        columns.1.y = scale
-        columns.2.z = scale
-    }
-}
