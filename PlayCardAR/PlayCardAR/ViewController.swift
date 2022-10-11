@@ -113,100 +113,19 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         self.resetTracking()
     }
     
-    
-    func showScene() {
-        ///option 1
-        //        // Create a new scene
-        //        let scene = SCNScene(named: "art.scnassets/ship.scn")!
-        //        // Set the scene to the view
-        //        sceneView.scene = scene
-        
-        ///option 2
-        //        let scene = SCNScene(named: "art.scnassets/box.scn")!
-        //        let plane = SCNPlane(width: 0.1, height: 0.1)
-        //        plane.firstMaterial?.diffuse.contents = UIColor.red.withAlphaComponent(0.5)
-        //        plane.cornerRadius = 0.005
-        //        let planeNode = SCNNode(geometry: plane)
-        //        scene.rootNode.addChildNode(planeNode)
-        //        sceneView.scene = scene
-        //        self.pokemonNode = sceneView.scene.rootNode.childNode(withName: "box", recursively: false)
-        //        sceneView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:))))
-        //        sceneView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap(_:))))
-    }
-    
     func setConfig() {
-        //config 1
-        // Create a session configuration
-        //        let configuration = ARWorldTrackingConfiguration()
-        //
-        //        // Run the view's session
-        //        sceneView.session.run(configuration)
-        //config 2
+       
         let config = ARImageTrackingConfiguration()
         guard let trackingImages = ARReferenceImage.referenceImages(inGroupNamed: "PlayGame", bundle: nil) else {  return  }
         config.trackingImages = trackingImages
         //        config.planeDetection = .horizontal
         //        config.environmentTexturing = .automatic
         sceneView.session.run(config, options: [.resetTracking, .removeExistingAnchors])
-        
-        
-        //config 3
-        //        // Create a session configuration
-        //        let configuration = ARWorldTrackingConfiguration()
-        //        configuration.planeDetection = .vertical
-        //        // Run the view's session
-        //        let options: ARSession.RunOptions = [.resetTracking, .removeExistingAnchors]
-        ////        sceneView.session.run(configuration)
-        //        sceneView.session.run(configuration, options: options)
-        //        if let node = sceneView.scene.rootNode.childNode(withName: "Sphere_None", recursively: false) {
-        //            node.runAction(SCNAction.rotateBy(x: 1, y: 0, z: 0, duration: 1))
-        //            node.runAction(SCNAction.moveBy(x: 10, y: 10, z: 10, duration: 1))
-        //        }
+     
     }
     
-    @objc func screenTapped(_ sender: UITapGestureRecognizer) {
-        
-        if !hoopAddred {
-            let tapLocation = sender.location(in: sceneView)
-            let hitTestResults = sceneView.hitTest(tapLocation)
-            guard (hitTestResults.first?.node) != nil else {
-                let hitTestResultsWithFeaturePoints = sceneView.hitTest(tapLocation, types: .featurePoint)
-                if let hitTestResultWithFeaturePoints = hitTestResultsWithFeaturePoints.first {
-                    addHoop(result: hitTestResultWithFeaturePoints)
-                }
-                return
-            }
-            hoopAddred = true
-        }else {
-            self.createBasketball()
-        }
-    }
-    
-    func addHoop(result: ARHitTestResult) {
-        let hoop = SCNScene(named: "art.scnassets/basketball.scn")!
-        guard let nodeHoop = hoop.rootNode.childNode(withName: "game", recursively: false) else { return }
-        
-        let position = result.worldTransform.columns.3
-        nodeHoop.position = SCNVector3(position.x, position.y, position.z)
-        nodeHoop.physicsBody = SCNPhysicsBody(type: .static, shape: SCNPhysicsShape(node: nodeHoop, options: [SCNPhysicsShape.Option.type: SCNPhysicsShape.ShapeType.concavePolyhedron]))
-        sceneView.scene.rootNode.addChildNode(nodeHoop)
-    }
-    
-    func createBasketball() {
-        guard let currentFrame = sceneView.session.currentFrame else { return }
-        let ball = SCNNode(geometry: SCNSphere(radius: 0.05))
-        ball.geometry?.firstMaterial?.diffuse.contents = UIColor.green
-        
-        let camera = SCNMatrix4(currentFrame.camera.transform)
-        ball.transform = camera
-        
-        let physicBody = SCNPhysicsBody(type: .dynamic, shape: SCNPhysicsShape(node: ball))
-        ball.physicsBody = physicBody
-        let power = Float(10.0)
-        let force = SCNVector3(-camera.m31 * power, -camera.m32 * power, -camera.m33 * power)
-        ball.physicsBody?.applyForce(force, asImpulse: true)
-        sceneView.scene.rootNode.addChildNode(ball)
-    }
+   
+  
     
     func addBallPokemon() {
         sceneView.autoenablesDefaultLighting = true
