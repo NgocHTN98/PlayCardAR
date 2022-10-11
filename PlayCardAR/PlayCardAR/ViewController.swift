@@ -143,7 +143,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         //        sceneView.session.run(configuration)
         //config 2
         let config = ARImageTrackingConfiguration()
-        guard let trackingImages = ARReferenceImage.referenceImages(inGroupNamed: "PlayGame", bundle: nil) else {   fatalError("Couldn't load tracking images.") }
+        guard let trackingImages = ARReferenceImage.referenceImages(inGroupNamed: "PlayGame", bundle: nil) else {  return  }
         config.trackingImages = trackingImages
         //        config.planeDetection = .horizontal
         //        config.environmentTexturing = .automatic
