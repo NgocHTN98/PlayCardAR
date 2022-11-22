@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		18A6AE2C28E5946300640A58 /* ViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A6AE2B28E5946300640A58 /* ViewController2.swift */; };
 		E100C97F292C8D0B00FDD789 /* DemoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E100C97E292C8D0B00FDD789 /* DemoVC.swift */; };
+		E100C985292CAA2F00FDD789 /* CleanAir.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = E100C984292CA9EE00FDD789 /* CleanAir.mlmodel */; };
 		E15223E428F548B2007379FA /* Extensions+ARSCNView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15223E328F548B2007379FA /* Extensions+ARSCNView.swift */; };
 		E15223E828F54A5A007379FA /* sample.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E15223E528F54A5A007379FA /* sample.mp3 */; };
 		E15223E928F54A5A007379FA /* music_test.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E15223E628F54A5A007379FA /* music_test.mp3 */; };
@@ -45,6 +46,7 @@
 /* Begin PBXFileReference section */
 		18A6AE2B28E5946300640A58 /* ViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController2.swift; sourceTree = "<group>"; };
 		E100C97E292C8D0B00FDD789 /* DemoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoVC.swift; sourceTree = "<group>"; };
+		E100C984292CA9EE00FDD789 /* CleanAir.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = CleanAir.mlmodel; sourceTree = "<group>"; };
 		E15223E328F548B2007379FA /* Extensions+ARSCNView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extensions+ARSCNView.swift"; sourceTree = "<group>"; };
 		E15223E528F54A5A007379FA /* sample.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = sample.mp3; sourceTree = "<group>"; };
 		E15223E628F54A5A007379FA /* music_test.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = music_test.mp3; sourceTree = "<group>"; };
@@ -117,6 +119,14 @@
 			path = Audio;
 			sourceTree = "<group>";
 		};
+		E100C983292CA9EB00FDD789 /* MLModel */ = {
+			isa = PBXGroup;
+			children = (
+				E100C984292CA9EE00FDD789 /* CleanAir.mlmodel */,
+			);
+			path = MLModel;
+			sourceTree = "<group>";
+		};
 		E1DA7B0028E2E81000B91164 = {
 			isa = PBXGroup;
 			children = (
@@ -140,6 +150,7 @@
 		E1DA7B0B28E2E81000B91164 /* PlayCardAR */ = {
 			isa = PBXGroup;
 			children = (
+				E100C983292CA9EB00FDD789 /* MLModel */,
 				E100C97B292C8C8F00FDD789 /* Audio */,
 				E100C97A292C8C7F00FDD789 /* Extensions */,
 				E100C979292C8C6B00FDD789 /* ViewController */,
@@ -308,6 +319,7 @@
 				E1DA7B1128E2E81000B91164 /* ViewController.swift in Sources */,
 				18A6AE2C28E5946300640A58 /* ViewController2.swift in Sources */,
 				E15223E428F548B2007379FA /* Extensions+ARSCNView.swift in Sources */,
+				E100C985292CAA2F00FDD789 /* CleanAir.mlmodel in Sources */,
 				E160ED5628E6853300C98259 /* Experience.rcproject in Sources */,
 				E1DA7B0D28E2E81000B91164 /* AppDelegate.swift in Sources */,
 				E100C97F292C8D0B00FDD789 /* DemoVC.swift in Sources */,
