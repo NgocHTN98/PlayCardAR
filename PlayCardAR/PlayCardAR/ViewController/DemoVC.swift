@@ -11,7 +11,11 @@ import ARKit
 import SceneKit
 
 class DemoVC: UIViewController {
-    lazy var sceneView = ARSCNView()
+    lazy var sceneView: ARSCNView = {
+        let scene = ARSCNView()
+        scene.scene = SCNScene()
+        return scene
+    }()
     lazy var visionRequests = [VNRequest]()
     
     private let bubbleDepth : Float = 0.01 // the 'depth' of 3D text
@@ -42,9 +46,6 @@ class DemoVC: UIViewController {
     func prepareUI() {
         sceneView.delegate = self
         sceneView.showsStatistics = true
-        // Create a new scene
-        let scene = SCNScene()
-        sceneView.scene = scene
         
         // Enable Default Lighting - makes the 3D text a bit poppier.
         sceneView.autoenablesDefaultLighting = true
@@ -74,7 +75,7 @@ class DemoVC: UIViewController {
     func setupVisionModel() {
         // Set up Vision Model
         if #available(iOS 12.0, *) {
-            guard let selectedModel = try? VNCoreMLModel(for: CleanAir().model) else { // (Optional) This can be replaced with other models on https://developer.apple.com/machine-learning/
+            guard let selectedModel = try? VNCoreMLModel(for: CleanAir().model) else { // (Optional) This can be replaced with other models on
                 fatalError("Could not load model. Ensure model has been drag and dropped (copied) to XCode Project from https://developer.apple.com/machine-learning/ . Also ensure the model is part of a target (see: https://stackoverflow.com/questions/45884085/model-is-not-part-of-any-target-add-the-model-to-a-target-to-enable-generation ")
             }
             // Set up Vision-CoreML Request
@@ -83,13 +84,13 @@ class DemoVC: UIViewController {
             visionRequests = [classificationRequest]
         } else {
             // Fallback on earlier versions
+            print("Not support version")
         }
     }
     
     // MARK: - CoreML Vision Handling
     func loopCoreMLUpdate() {
         // Continuously run CoreML whenever it's ready. (Preventing 'hiccups' in Frame Rate)
-        
         DispatchQueue.main.async {
             // 1. Run Update.
             self.updateCoreML()
@@ -113,7 +114,7 @@ class DemoVC: UIViewController {
         
         // Get Classifications
         let classifications = observations[0...1] // top 2 results
-            .flatMap({ $0 as? VNClassificationObservation })
+            .compactMap({ $0 as? VNClassificationObservation })
             .map({ "\($0.identifier) \(String(format:"- %.2f", $0.confidence))" })
             .joined(separator: "\n")
         
@@ -176,6 +177,7 @@ class DemoVC: UIViewController {
             node.position = worldCoord
         }
     }
+   
     
     func createNewBubbleParentNode(_ text : String) -> SCNNode {
         // Warning: Creating 3D Text is susceptible to crashing. To reduce chances of crashing; reduce number of polygons, letters, smoothness, etc.
@@ -219,7 +221,13 @@ class DemoVC: UIViewController {
     }
 }
 extension DemoVC: ARSCNViewDelegate {
-    
+    func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
+        if let _scene = SCNScene(named: "art.scnassets/mascot.usdc"), let _node = _scene.rootNode.childNodes.first {
+            _node.position = .init(0, 0, 0)
+           return _node
+        }
+        return SCNNode()
+    }
 }
 extension UIFont {
     // Based on: https://stackoverflow.com/questions/4713236/how-do-i-set-bold-and-italic-on-uilabel-of-iphone-ipad
