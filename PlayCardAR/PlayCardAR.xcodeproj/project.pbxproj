@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		18A6AE2C28E5946300640A58 /* ViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A6AE2B28E5946300640A58 /* ViewController2.swift */; };
+		E100C97F292C8D0B00FDD789 /* DemoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E100C97E292C8D0B00FDD789 /* DemoVC.swift */; };
 		E15223E428F548B2007379FA /* Extensions+ARSCNView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15223E328F548B2007379FA /* Extensions+ARSCNView.swift */; };
 		E15223E828F54A5A007379FA /* sample.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E15223E528F54A5A007379FA /* sample.mp3 */; };
 		E15223E928F54A5A007379FA /* music_test.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E15223E628F54A5A007379FA /* music_test.mp3 */; };
@@ -43,6 +44,7 @@
 
 /* Begin PBXFileReference section */
 		18A6AE2B28E5946300640A58 /* ViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController2.swift; sourceTree = "<group>"; };
+		E100C97E292C8D0B00FDD789 /* DemoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoVC.swift; sourceTree = "<group>"; };
 		E15223E328F548B2007379FA /* Extensions+ARSCNView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extensions+ARSCNView.swift"; sourceTree = "<group>"; };
 		E15223E528F54A5A007379FA /* sample.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = sample.mp3; sourceTree = "<group>"; };
 		E15223E628F54A5A007379FA /* music_test.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = music_test.mp3; sourceTree = "<group>"; };
@@ -87,6 +89,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E100C979292C8C6B00FDD789 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				E1DA7B1028E2E81000B91164 /* ViewController.swift */,
+				18A6AE2B28E5946300640A58 /* ViewController2.swift */,
+				E100C97E292C8D0B00FDD789 /* DemoVC.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		E100C97A292C8C7F00FDD789 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				E15223E328F548B2007379FA /* Extensions+ARSCNView.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		E100C97B292C8C8F00FDD789 /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				E15223E728F54A5A007379FA /* fireplace.mp3 */,
+				E15223E628F54A5A007379FA /* music_test.mp3 */,
+				E15223E528F54A5A007379FA /* sample.mp3 */,
+			);
+			path = Audio;
+			sourceTree = "<group>";
+		};
 		E1DA7B0028E2E81000B91164 = {
 			isa = PBXGroup;
 			children = (
@@ -110,18 +140,15 @@
 		E1DA7B0B28E2E81000B91164 /* PlayCardAR */ = {
 			isa = PBXGroup;
 			children = (
+				E100C97B292C8C8F00FDD789 /* Audio */,
+				E100C97A292C8C7F00FDD789 /* Extensions */,
+				E100C979292C8C6B00FDD789 /* ViewController */,
 				E1DA7B0C28E2E81000B91164 /* AppDelegate.swift */,
-				E15223E728F54A5A007379FA /* fireplace.mp3 */,
-				E15223E628F54A5A007379FA /* music_test.mp3 */,
-				E15223E528F54A5A007379FA /* sample.mp3 */,
 				E1DA7B0E28E2E81000B91164 /* art.scnassets */,
-				E1DA7B1028E2E81000B91164 /* ViewController.swift */,
-				18A6AE2B28E5946300640A58 /* ViewController2.swift */,
 				E1DA7B1228E2E81000B91164 /* Main.storyboard */,
 				E160ED5528E6853300C98259 /* Experience.rcproject */,
 				E1DA7B1528E2E81000B91164 /* Assets.xcassets */,
 				E1DA7B1728E2E81000B91164 /* LaunchScreen.storyboard */,
-				E15223E328F548B2007379FA /* Extensions+ARSCNView.swift */,
 			);
 			path = PlayCardAR;
 			sourceTree = "<group>";
@@ -283,6 +310,7 @@
 				E15223E428F548B2007379FA /* Extensions+ARSCNView.swift in Sources */,
 				E160ED5628E6853300C98259 /* Experience.rcproject in Sources */,
 				E1DA7B0D28E2E81000B91164 /* AppDelegate.swift in Sources */,
+				E100C97F292C8D0B00FDD789 /* DemoVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
